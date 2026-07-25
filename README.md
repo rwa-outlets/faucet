@@ -1,6 +1,9 @@
 # RWA Outlets — Faucet
 
-Test-token faucet for the Base Sepolia demo, live at **faucet.rwaoutlet.club**.
+Test-token faucet for the RWA Outlets demo, served at **faucet.rwaoutlet.club**. Currently
+deployed on **Ethereum Sepolia** (see [Deployed](#deployed--ethereum-sepolia-11155111));
+the chain is runtime config, so retargeting (e.g. Base Sepolia) is a config + redeploy of the
+contract, not a code change.
 
 Built to the infra repo's contract (`terraform/terraform/faucet_app.tf`): a **static site** —
 nginx on port 80, health check `GET /` — with **no backend and no server-side signer**. All
@@ -23,8 +26,28 @@ user wallet ──drip()──▶ Faucet.sol ──mint()──▶ TestUSDC, rwa
   the page reads everything live from the contract, so config changes need no redeploy.
 
 Gas chicken-and-egg: calling `drip()` itself costs a little ETH. The page links a
-[Base Sepolia gas faucet](https://docs.base.org/base-chain/tools/network-faucets), and the
-recipient field lets any funded wallet (e.g. a teammate) drip to a fresh address.
+[gas faucet](https://faucets.chain.link/sepolia), and the recipient field lets any funded
+wallet (e.g. a teammate) drip to a fresh address.
+
+## Deployed — Ethereum Sepolia (11155111)
+
+| Contract | Address | Per claim |
+| --- | --- | --- |
+| **Faucet** | [`0xE78E87D994358D17aaf4653d8398f22C93fb758A`](https://sepolia.etherscan.io/address/0xE78E87D994358D17aaf4653d8398f22C93fb758A) | — |
+| TestUSDC (`USDC`, 6d) | [`0x062b2F19C852e486b4b913933420957018d1db31`](https://sepolia.etherscan.io/token/0x062b2F19C852e486b4b913933420957018d1db31) | 1,000 |
+| RWA T-Bill (`rwaTBILL`, 18d) | [`0x5456E52531085291a35CF0d902aE72D6616b665D`](https://sepolia.etherscan.io/token/0x5456E52531085291a35CF0d902aE72D6616b665D) | 1,000 |
+| RWA Credit (`rwaCREDIT`, 18d) | [`0xFbca2B3334138C109D51f5101343DE0A35a0eDD9`](https://sepolia.etherscan.io/token/0xFbca2B3334138C109D51f5101343DE0A35a0eDD9) | 1,000 |
+
+- Params: 6 h cooldown per address, 0.002 ETH gas stipend per claim (paid while the faucet
+  holds ETH). Owner/deployer: `0x8b7699EddbdE63f199c9629Ec8C88e3F704100f7`.
+- Verified end-to-end with a live claim:
+  [drip tx](https://sepolia.etherscan.io/tx/0x4a2aa88de12fb65bf28a100e7ef73c5ca010353e2a65c6d9b073ed47fd01b270)
+  → 1,000 USDC minted, cooldown armed.
+- These tokens are this repo's [`MintableERC20`](contracts/MintableERC20.sol) placeholders,
+  **not** the protocol's demo assets from `rwa-outlet-contracts-core/deployments/11155111.json`
+  — to dispense those instead, point the faucet at them with `setTokens(...)` (the faucet
+  needs mint rights on them) and no page redeploy is required.
+- [`public/config.json`](public/config.json) already points the page at this deployment.
 
 ## Local dev
 
