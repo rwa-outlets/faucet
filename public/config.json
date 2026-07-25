@@ -1,8 +1,8 @@
 {
-  "chainId": 84532,
-  "chainName": "Base Sepolia",
-  "rpcUrl": "https://sepolia.base.org",
-  "explorerUrl": "https://sepolia.basescan.org",
-  "faucetAddress": "",
-  "gasFaucetUrl": "https://docs.base.org/base-chain/tools/network-faucets"
+  "chainId": 11155111,
+  "chainName": "Sepolia",
+  "rpcUrl": "https://ethereum-sepolia-rpc.publicnode.com",
+  "explorerUrl": "https://sepolia.etherscan.io",
+  "faucetAddress": "0xE78E87D994358D17aaf4653d8398f22C93fb758A",
+  "gasFaucetUrl": "https://faucets.chain.link/sepolia"
 }
