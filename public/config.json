@@ -1,0 +1,8 @@
+{
+  "chainId": 84532,
+  "chainName": "Base Sepolia",
+  "rpcUrl": "https://sepolia.base.org",
+  "explorerUrl": "https://sepolia.basescan.org",
+  "faucetAddress": "",
+  "gasFaucetUrl": "https://docs.base.org/base-chain/tools/network-faucets"
+}
